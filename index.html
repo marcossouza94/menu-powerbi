@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu Power BI</title>
   <style>
     /* Estilo Geral */
@@ -16,12 +16,31 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Estilo da imagem central */
-    #logo {
-      margin-bottom: 20px;
-      max-width: 200px;
+    /* Marca d'água no fundo */
+    body::before {
+      content: "";
+      background: url('wsbi-logo.jpg') no-repeat center center;
+      background-size: 300px;
+      opacity: 0.05;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Conteúdo principal acima da marca d'água */
+    .menu, .suporte, .relatorio-powerbi {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 800px;
     }
 
     /* Estilo do menu */
@@ -69,17 +88,29 @@
       display: block;
     }
 
-    /* Estilo do botão separado */
     .suporte {
       margin-top: 20px;
       text-align: center;
     }
+
+    /* Área do Relatório Power BI */
+    .relatorio-powerbi {
+      display: none; /* Oculto por padrão */
+      width: 90%;
+      max-width: 1000px;
+      height: 80vh;
+      margin: 30px auto;
+    }
+
+    .relatorio-powerbi iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
-
-  <!-- Imagem central -->
-  <img src="wsbi-logo.jpg" alt="WSBI Logo" id="logo">
 
   <!-- Menu -->
   <div class="menu">
@@ -88,13 +119,7 @@
     <div class="area">
       <h2>Área Comercial</h2>
       <div class="buttons">
-        <!-- Botão Vendas com link do Power BI -->
-        <button>
-          <a href="https://app.powerbi.com/Redirect?action=OpenApp&appId=0427681c-28af-42fa-9460-1a6bbd23ae7d&ctid=6bc4363b-0b50-4736-95db-914d71e17acc&experience=power-bi " target="_blank">
-            Vendas
-          </a>
-        </button>
-
+        <button onclick="mostrarRelatorio()">Vendas</button>
         <button><a href="#">Planejamento Vendas</a></button>
         <button><a href="#">Vendedor</a></button>
       </div>
@@ -146,13 +171,35 @@
         <button><a href="#">Exames Periódicos</a></button>
       </div>
     </div>
-
   </div>
 
   <!-- Suporte BI -->
   <div class="suporte">
     <button><a href="#">Suporte BI</a></button>
   </div>
+
+  <!-- Área para exibir o Power BI -->
+  <div class="relatorio-powerbi" id="relatorioPowerBI">
+    <iframe 
+      title="BI Vendas"
+      src="https://app.powerbi.com/view?r=eyJrIjoiNTQ1ZTNkYTUtYjljNi00NTBhLTgzYTMtMzdkNDg4NWQ3ZjdhIiwidCI6IjZiYzQzNjNiLTBiNTAtNDczNi05NWRiLTkxNGQ3MWUxN2FjYyJ9 "
+      width="100%"
+      height="100%"
+      frameborder="0"
+      allowFullScreen="true">
+    </iframe>
+  </div>
+
+  <!-- Script para mostrar o relatório -->
+  <script>
+    function mostrarRelatorio() {
+      const relatorio = document.getElementById('relatorioPowerBI');
+      relatorio.style.display = 'block';
+
+      // Rola até o relatório (opcional)
+      relatorio.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
 
 </body>
 </html>
